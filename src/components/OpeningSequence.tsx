@@ -92,7 +92,7 @@ export default function OpeningSequence({ onDone }: { onDone: () => void }) {
           srcSet={profile.portrait.srcSet}
           sizes="(max-width: 768px) 100vw, 900px"
           alt={profile.portrait.alt}
-          className="h-full w-auto max-w-none object-contain object-bottom [mask-image:linear-gradient(to_bottom,black_55%,transparent_98%)]"
+          className="h-full w-auto max-w-none object-contain object-bottom [mask-image:linear-gradient(to_bottom,black_80%,transparent_98%)]"
 
         />
       </motion.div>
