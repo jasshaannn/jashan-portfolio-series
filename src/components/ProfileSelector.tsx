@@ -6,14 +6,7 @@ import { EASE } from './fx';
 export function ProfileAvatar({ id, size = 'lg' }: { id: ProfileId; size?: 'sm' | 'lg' }) {
   const p = viewerProfiles.find((v) => v.id === id)!;
   const box = size === 'lg' ? 'h-24 w-24 sm:h-32 sm:w-32 md:h-36 md:w-36 rounded-xl' : 'h-8 w-8 rounded-md';
-  if (id === 'jashan') {
-    return (
-      <span className={`relative block overflow-hidden ${box}`} style={{ background: 'radial-gradient(circle at 50% 30%, #7a0f24, #1a0509)' }}>
-        <img src="/assets/portrait-420.webp" alt="" className="absolute inset-x-0 bottom-0 mx-auto h-[105%] w-auto max-w-none object-cover object-[center_12%]" />
-      </span>
-    );
-  }
-  const glyph = { recruiter: 'R', developer: '</>', creative: '✦' }[id];
+  const glyph = { jashan: 'J', recruiter: 'R', developer: '</>', creative: '✦' }[id];
   return (
     <span
       className={`relative flex items-center justify-center overflow-hidden font-display text-bone ${box}`}

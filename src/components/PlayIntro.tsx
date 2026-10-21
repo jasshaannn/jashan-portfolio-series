@@ -2,28 +2,20 @@ import { useCallback, useEffect, useState } from 'react';
 import { AnimatePresence, motion, useMotionValue } from 'framer-motion';
 import { introSlides, profile } from '../data/portfolio';
 import { useScrollLock } from '../hooks/smoothScroll';
-import { useReducedMotionPref } from '../hooks/useMedia';
 import { EASE } from './fx';
 
 const SLIDE_MS = 3600;
 
 /**
- * "▶ Play Intro": darken → zoom into the portrait → a full-screen highlight reel
+ * "▶ Play Intro": a full-screen highlight reel
  * built only from resume facts → fade back to the portfolio.
  */
 export default function PlayIntro({ onClose }: { onClose: () => void }) {
   useScrollLock(true);
-  const reduced = useReducedMotionPref();
-  const [phase, setPhase] = useState<'zoom' | 'reel' | 'end'>(reduced ? 'reel' : 'zoom');
+  const [phase, setPhase] = useState<'reel' | 'end'>('reel');
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const progress = useMotionValue(0);
-
-  useEffect(() => {
-    if (phase !== 'zoom') return;
-    const t = window.setTimeout(() => setPhase('reel'), 1700);
-    return () => clearTimeout(t);
-  }, [phase]);
 
   const next = useCallback(() => {
     setIndex((i) => {
@@ -92,32 +84,17 @@ export default function PlayIntro({ onClose }: { onClose: () => void }) {
       aria-modal="true"
       aria-label="Intro highlight reel"
     >
-      {/* Zoom into the portrait */}
-      <motion.div
-        className="absolute inset-0 flex items-end justify-center"
-        initial={{ scale: 1, opacity: 1 }}
-        animate={phase === 'zoom' ? { scale: [1, 1.08, 2.6], opacity: [0.9, 1, 0] } : { opacity: 0.1, scale: 1.25, filter: 'blur(4px)' }}
-        transition={{ duration: phase === 'zoom' ? 1.7 : 1.2, ease: [0.7, 0, 0.2, 1], times: phase === 'zoom' ? [0, 0.3, 1] : undefined }}
-        style={{ transformOrigin: '50% 30%' }}
-      >
-        <img
-          src={profile.portrait.src}
-          srcSet={profile.portrait.srcSet}
-          sizes="100vw"
-          alt=""
-          className="h-[88vh] w-auto max-w-none object-contain [mask-image:linear-gradient(to_bottom,black_60%,transparent)]"
-        />
-      </motion.div>
-      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_45%,rgba(120,10,25,0.35),transparent_70%)]" />
+      {/* Atmospheric backdrop */}
+      <div aria-hidden className="absolute inset-0 bg-[radial-gradient(70%_70%_at_50%_45%,rgba(140,12,28,0.4),transparent_75%)]" />
 
       {/* progress bars */}
-      {phase !== 'zoom' && (
+      {phase === 'reel' && (
         <div className="absolute inset-x-0 top-0 z-20 flex gap-1.5 px-4 pt-4 sm:px-10 sm:pt-6">
           {introSlides.map((s, i) => (
             <div key={s.kicker} className="h-[3px] flex-1 overflow-hidden rounded bg-white/15">
               <motion.div
                 className="h-full origin-left bg-bone"
-                style={{ scaleX: i === index && phase === 'reel' ? progress : i < index || phase === 'end' ? 1 : 0 }}
+                style={{ scaleX: i === index ? progress : i < index ? 1 : 0 }}
               />
             </div>
           ))}
