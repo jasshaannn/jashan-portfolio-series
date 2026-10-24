@@ -44,19 +44,18 @@ export default function About() {
             transition={{ duration: 1.2, ease: EASE }}
           >
             <Tilt max={5} className="rounded-2xl">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
-                <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_30%,#5a0b1b,#14060a_60%,#07070a)]" />
-                <div className="absolute inset-0 opacity-50 [background-image:repeating-linear-gradient(90deg,rgba(255,255,255,0.03)_0px,rgba(255,255,255,0.03)_1px,transparent_1px,transparent_28px)]" />
+              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] group">
                 <img
                   src="/assets/portrait-720.webp"
                   srcSet={profile.portrait.srcSet}
                   sizes="(max-width: 1024px) 90vw, 42vw"
                   alt={profile.portrait.alt}
                   loading="lazy"
-                  className="absolute bottom-0 left-1/2 h-[96%] w-auto max-w-none -translate-x-1/2 object-contain object-bottom drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]"
+                  className="absolute inset-0 h-full w-full object-cover object-center transition duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/90 to-transparent" />
-                <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/25 opacity-70" />
+                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black via-black/75 to-transparent" />
+                <div className="absolute bottom-5 left-5 right-5 z-10 flex items-end justify-between">
                   <div>
                     <p className="text-[10px] font-bold tracking-[0.3em] text-crimson-2">STARRING</p>
                     <p className="font-display text-3xl leading-none text-bone">{profile.displayName}</p>
